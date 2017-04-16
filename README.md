@@ -8,7 +8,7 @@ to rebuild my WM from a fresh Ubuntu installation.
 1. DWM (dynamic window manager)
 1. XPS 15 9550
 
-#### Configuration
+#### Configuration:
 
 To install DWM simply run `make install` on the DWM package.
 No modification of the config.mk file is necessary on Ubuntu.
