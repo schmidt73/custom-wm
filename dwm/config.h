@@ -1,5 +1,3 @@
-/* See LICENSE file for copyright and license details. */
-
 /* appearance */
 static const char font[]            = "-*-terminus-medium-r-*-*-30-*-*-*-*-*-*-*";
 static const char normbordercolor[] = "#444444";
@@ -14,7 +12,7 @@ static const Bool showbar           = True;     /* False means no bar */
 static const Bool topbar            = True;     /* False means bottom bar */
 
 /* tagging */
-static const char *tags[] = { "home", "web", "mail", "osrs",};
+static const char *tags[] = { "home", "web", "mail", "osrs", "misc",};
 
 static const Rule rules[] = {
 	/* class      			instance    title       tags mask     isfloating   monitor */
@@ -46,8 +44,17 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "uxterm", "-fn", font, "-e", "bash", "-c", "cd ~/Desktop; exec bash"};
+static const char *dmenucmd[]   = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *termcmd[]    = { "uxterm", "-fn", font, "-e", "bash", "-c", "cd ~; exec bash", NULL };
+static const char *chromecmd[]  = { "chrome", NULL };
+static const char *osrscmd[]    = { "osbuddy", NULL };
+
+/* 
+ * maps tags to their corresponding shell command for
+ * use with the ALT+o keybind.
+ */
+static const char** open_table[] = {termcmd, chromecmd, termcmd, osrscmd,};
+static void app_open(const Arg *arg);
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -60,6 +67,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY,			XK_o,      app_open,       {0} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
@@ -103,3 +111,23 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
 
+int get_lowest_tag() {
+	if (!selmon->sel->tags) return -1;
+
+	unsigned int tag = 0;
+	unsigned int mask = 1;
+	while((mask & selmon->sel->tags) == 0) {
+		tag++;
+		mask = mask << 1;	
+	}
+
+	return tag;
+}
+
+void app_open(const Arg *arg) {
+	int tag = get_lowest_tag();
+	if (tag < 0) return;
+
+	Arg a = {.v = open_table[tag]};
+	spawn(&a);	
+}

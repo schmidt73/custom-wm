@@ -6,8 +6,9 @@ IDEAS:
 		- Time
 		- OS (idle status?)
 	- Set background to pattern
-		- Add empty border to center terminal and stuff
+		- Add empty border to center terminal and stuff like
+		  a box around everything
 	- Set rescale resolution on certain tabs
 		- (OSRS)
-
+	- Make mouse double click for right click
 		
