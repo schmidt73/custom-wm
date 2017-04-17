@@ -1,0 +1,13 @@
+IDEAS:
+	- Make ALT/CTRL+o on each tab open a corresponding window
+	- Menu Bar:
+		- Power
+		- Current Wifi
+		- Time
+		- OS (idle status?)
+	- Set background to pattern
+		- Add empty border to center terminal and stuff
+	- Set rescale resolution on certain tabs
+		- (OSRS)
+
+		

@@ -14,11 +14,12 @@ static const Bool showbar           = True;     /* False means no bar */
 static const Bool topbar            = True;     /* False means bottom bar */
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "home", "web", "mail", "osrs",};
 
 static const Rule rules[] = {
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Firefox",  NULL,       NULL,       1 << 8,       False,       -1 },
+	/* class      			instance    title       tags mask     isfloating   monitor */
+	{ "Chromium-browser",  		NULL,       NULL,       1 << 1,       False,       -1 },
+	{ "com-osbuddy-loader-Loader",  NULL,       NULL,       1 << 2,       False,       -1 },
 };
 
 /* layout(s) */
