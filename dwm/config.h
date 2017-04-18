@@ -53,7 +53,7 @@ static const char *osrscmd[]    = { "osbuddy", NULL };
  * maps tags to their corresponding shell command for
  * use with the ALT+o keybind.
  */
-static const char** open_table[] = {termcmd, chromecmd, termcmd, osrscmd,};
+static const char** open_table[] = {termcmd, chromecmd, termcmd, osrscmd, termcmd};
 static void app_open(const Arg *arg);
 
 static Key keys[] = {
@@ -111,20 +111,39 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
 
-int get_lowest_tag() {
-	if (!selmon->sel->tags) return -1;
+#include <stdarg.h>
+void logm(const char* fmt_string, ...)
+{
+	FILE* f = fopen("/home/schmidt73/custom-wm-log.txt", "a");
+	if (f == NULL) return;
+	
+	va_list args;
+	va_start(args, fmt_string);
+
+	vfprintf(f, fmt_string, args);
+	fflush(f);
+
+	va_end(args);
+
+	fclose(f);
+}
+
+int get_lowest_tag() 
+{
+	if (!selmon->tagset[selmon->seltags]) return -1;
 
 	unsigned int tag = 0;
 	unsigned int mask = 1;
-	while((mask & selmon->sel->tags) == 0) {
+	while((mask & selmon->tagset[selmon->seltags]) == 0) {
 		tag++;
-		mask = mask << 1;	
+		mask <<= 1;	
 	}
 
 	return tag;
 }
 
-void app_open(const Arg *arg) {
+void app_open(const Arg *arg) 
+{
 	int tag = get_lowest_tag();
 	if (tag < 0) return;
 

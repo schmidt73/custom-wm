@@ -1,9 +1,0 @@
-XSTARTUP_SCRIPTS_DIR=custom-wm/xstartup-scripts
-XSTARTUP_SCRIPTS=$(ls $XSTARTUP_SCRIPTS_DIR)
-
-for SCRIPT in $XSTARTUP_SCRIPTS
-do
-	sudo -u schmidt73 $XSTARTUP_SCRIPTS_DIR/$SCRIPT
-done
-
-exec dwm
