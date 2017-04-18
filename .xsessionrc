@@ -1,0 +1,15 @@
+#!/bin/bash
+
+MY_USER=schmidt73
+MY_HOME=/home/$MY_USER
+
+XSTARTUP_SCRIPTS_DIR=$MY_HOME/custom-wm/xstartup-scripts
+XSTARTUP_SCRIPTS=$(ls $XSTARTUP_SCRIPTS_DIR)
+
+for SCRIPT in $XSTARTUP_SCRIPTS
+do
+	sudo -u $MY_USER $XSTARTUP_SCRIPTS_DIR/$SCRIPT
+done
+
+BAR_MANAGER=$MY_HOME/custom-wm/dwm-bar-manager/dwm_bar_mgr
+sudo -u $MY_USER $BAR_MANAGER &

@@ -13,9 +13,18 @@ to rebuild my WM from a fresh Ubuntu installation.
 To install DWM simply run `make install` on the DWM package.
 No modification of the config.mk file is necessary on Ubuntu.
 
-Also place .xinitrc file in the users home directory. This will
+Make sure to place the custom-wm folder and all of its contents
+in the users home directory.
+
+Set the variables in .xsessionrc to correspond with the desired username and 
+home directory.
+
+Also place .xsessionrc file in the users home directory. This will
 configure settings like mousespeed, touchscreen sensitivity, and various
-others that interact with the XServer.
+others that interact with the XServer. It will also start
+the bar manager that displays information such as power, cpu, wifi, etc.
+in the top right corner of the screen.
+
 
 #### Relevant Links: 
 1. http://dwm.suckless.org
