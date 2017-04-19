@@ -15,6 +15,7 @@
  *  mv barM /usr/local/bin/
  */
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -38,10 +39,12 @@
 static const char * date(void);
 static const char * getuname(void);
 static const char * ram(void);
+static const char * get_battery(void);
+
 static void XSetRoot(const char *name);
 /*Append here your functions.*/
 static const char*(*const functab[])(void)={
-        ram,date
+        ram,date,get_battery
 };
 
 int main(void){
@@ -92,6 +95,56 @@ static const char * ram(void){
         return ram;
 }
 
+long read_long_from_file(const char* filename, int* error) {
+	char buff[MAXSTR];
+	size_t buff_len = sizeof(buff) / sizeof(buff[0]);
+
+	FILE* f = fopen(filename, "r");
+	if (f == NULL) {
+		*error = 1;
+		return 0;
+	}
+	
+	memset(buff, '\0', buff_len);
+	size_t nread = fread(buff, 1, buff_len - 1, f);
+	fclose(f);
+
+	if (nread < (buff_len - 1) && feof(f) == 0) {
+		*error = 1;
+		return 0;
+	}
+	
+	errno = 0;
+	long out = strtol(buff, NULL, 10);
+	if (errno == EINVAL || errno == ERANGE) {
+		*error = 1;
+		return 0;
+	} 
+	
+	*error = 0;
+	return out;
+}
+
+#define POWER_PATH "/sys/class/power_supply/BAT0/"
+/* Returns the current battery percentage */
+static const char * get_battery(void) {
+	static char battery[MAXSTR];
+
+	int error;
+	long charge_now = read_long_from_file(POWER_PATH "charge_now", &error);
+	if (error) {
+		return "Unknown";
+	}
+
+	long charge_full = read_long_from_file(POWER_PATH "charge_full", &error);
+	if (error) {
+		return "Unknown";
+	}
+
+	snprintf(battery, sizeof(battery), "%2f%%", 100.0 * ((double) charge_now) / ((double) charge_full));
+	return battery;
+}	
+		
 static void XSetRoot(const char *name){
         Display *display;
 
