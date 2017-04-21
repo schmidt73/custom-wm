@@ -1,0 +1,8 @@
+"amixer -D pulse set Master 1+ toggle" 
+   XF86AudioMute   
+
+"amixer -q sset Master 3%+"
+   XF86AudioRaiseVolume
+
+"amixer -q sset Master 3%-"
+   XF86AudioLowerVolume

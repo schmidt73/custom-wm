@@ -3,7 +3,8 @@
 MY_USER=schmidt73
 MY_HOME=/home/$MY_USER
 
-XSTARTUP_SCRIPTS_DIR=$MY_HOME/custom-wm/xstartup-scripts
+# Location of startup scripts to run.
+XSTARTUP_SCRIPTS_DIR=$MY_HOME/schminix/xstartup-scripts
 XSTARTUP_SCRIPTS=$(ls $XSTARTUP_SCRIPTS_DIR)
 
 for SCRIPT in $XSTARTUP_SCRIPTS
@@ -11,5 +12,13 @@ do
 	sudo -u $MY_USER $XSTARTUP_SCRIPTS_DIR/$SCRIPT
 done
 
-BAR_MANAGER=$MY_HOME/custom-wm/dwm-bar-manager/dwm_bar_mgr
+# Sets the background
+BACKGROUND=$MY_HOME/schminix/background.jpg
+feh --bg-scale $BACKGROUND &
+
+# Initializes keybinds (volume, brightness, etc.)
+xbindkeys &
+
+# Runs the bar manager that shows battery, time, date, ram, etc.
+BAR_MANAGER=$MY_HOME/schminix/dwm-bar-manager/dwm_bar_mgr
 sudo -u $MY_USER $BAR_MANAGER &

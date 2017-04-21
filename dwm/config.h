@@ -10,6 +10,7 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const Bool showbar           = True;     /* False means no bar */
 static const Bool topbar            = True;     /* False means bottom bar */
+static const unsigned int gappx     = 20;
 
 /* tagging */
 static const char *tags[] = { "home", "web", "mail", "osrs", "misc",};
@@ -114,7 +115,7 @@ static Button buttons[] = {
 #include <stdarg.h>
 void logm(const char* fmt_string, ...)
 {
-	FILE* f = fopen("/home/schmidt73/custom-wm-log.txt", "a");
+	FILE* f = fopen("/home/schmidt73/schminix-log.txt", "a");
 	if (f == NULL) return;
 	
 	va_list args;
