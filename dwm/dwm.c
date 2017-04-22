@@ -51,8 +51,8 @@
 #define MAX(A, B)               ((A) > (B) ? (A) : (B))
 #define MIN(A, B)               ((A) < (B) ? (A) : (B))
 #define MOUSEMASK               (BUTTONMASK|PointerMotionMask)
-#define WIDTH(X)                ((X)->w + 2 * (X)->bw + gappx)
-#define HEIGHT(X)               ((X)->h + 2 * (X)->bw + gappx)
+#define WIDTH(X)                ((X)->w + 2 * (X)->bw)
+#define HEIGHT(X)               ((X)->h + 2 * (X)->bw)
 #define TAGMASK                 ((1 << LENGTH(tags)) - 1)
 #define TEXTW(X)                (textnw(X, strlen(X)) + dc.font.height)
 
@@ -1347,44 +1347,23 @@ resize(Client *c, int x, int y, int w, int h, Bool interact) {
 	if(applysizehints(c, &x, &y, &w, &h, interact))
 		resizeclient(c, x, y, w, h);
 }
-
+	
 void
 resizeclient(Client *c, int x, int y, int w, int h) {
 	XWindowChanges wc;
-	unsigned int n;
-	unsigned int gapoffset;
-	unsigned int gapincr;
-	Client *nbc;
 
 	wc.border_width = c->bw;
 
-	/* Get number of clients for the selected monitor */
-	for (n = 0, nbc = nexttiled(selmon->clients); nbc; nbc = nexttiled(nbc->next), n++);
-
-	/* Do nothing if layout is floating */
-	if (c->isfloating || selmon->lt[selmon->sellt]->arrange == NULL) {
-		gapincr = gapoffset = 0;
-	} else {
-		/* Remove border and gap if layout is monocle or only one client */
-		if (selmon->lt[selmon->sellt]->arrange == monocle || n == 1) {
-			gapoffset = 0;
-			gapincr = -2 * borderpx;
-			wc.border_width = 0;
-		} else {
-			gapoffset = gappx;
-			gapincr = 2 * gappx;
-		}
-	}
-
-	c->oldx = c->x; c->x = wc.x = x + gapoffset;
-	c->oldy = c->y; c->y = wc.y = y + gapoffset;
-	c->oldw = c->w; c->w = wc.width = w - gapincr;
-	c->oldh = c->h; c->h = wc.height = h - gapincr;
+	c->oldx = c->x; c->x = wc.x 	 = x;
+	c->oldy = c->y; c->y = wc.y 	 = y;
+	c->oldw = c->w; c->w = wc.width  = w;
+	c->oldh = c->h; c->h = wc.height = h;
 
 	XConfigureWindow(dpy, c->win, CWX|CWY|CWWidth|CWHeight|CWBorderWidth, &wc);
 	configure(c);
 	XSync(dpy, False);
 }
+
 
 void
 resizemouse(const Arg *arg) {
@@ -1729,6 +1708,14 @@ textnw(const char *text, unsigned int len) {
 void
 tile(Monitor *m) {
 	unsigned int i, n, h, mw, my, ty;
+	unsigned int wx, wy, ww, wh;
+	
+	/* Pretend the window is smaller and starts in a different corner */
+	wx = m->wx + (m->ww * borderwidth);
+	wy = m->wy + (m->wh * borderheight);
+	ww = m->ww - (m->ww * 2.0 * borderwidth);
+	wh = m->wh - (m->wh * 2.0 * borderheight);
+
 	Client *c;
 
 	for(n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
@@ -1736,20 +1723,21 @@ tile(Monitor *m) {
 		return;
 
 	if(n > m->nmaster)
-		mw = m->nmaster ? m->ww * m->mfact : 0;
+		mw = m->nmaster ? ww * m->mfact : 0;
 	else
-		mw = m->ww;
-	for(i = my = ty = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
-		if(i < m->nmaster) {
-			h = (m->wh - my) / (MIN(n, m->nmaster) - i);
-			resize(c, m->wx, m->wy + my, mw - (2*c->bw), h - (2*c->bw), False);
+		mw = ww;
+
+	for (i = my = ty = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
+		if (i < m->nmaster) {
+			h = (wh - my) / (MIN(n, m->nmaster) - i);
+			resize(c, wx, wy + my, mw - (2*c->bw), h - (2*c->bw), 0);
 			my += HEIGHT(c);
-		}
-		else {
-			h = (m->wh - ty) / (n - i);
-			resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), False);
+		} else {
+			h = (wh - ty) / (n - i);
+			resize(c, wx + mw, wy + ty, ww - mw - (2*c->bw), h - (2*c->bw), 0);
 			ty += HEIGHT(c);
 		}
+	}
 }
 
 void

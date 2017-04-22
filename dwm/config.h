@@ -6,11 +6,12 @@ static const char normfgcolor[]     = "#bbbbbb";
 static const char selbordercolor[]  = "#005577";
 static const char selbgcolor[]      = "#005577";
 static const char selfgcolor[]      = "#eeeeee";
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const Bool showbar           = True;     /* False means no bar */
 static const Bool topbar            = True;     /* False means bottom bar */
-static const unsigned int gappx     = 20;
+static const double borderwidth     = 0.04F;    /* size of borders as percent of screen size (without bar) */
+static const double borderheight    = 0.05F;    /* size of borders as percent of screen size (without bar) */
 
 /* tagging */
 static const char *tags[] = { "home", "web", "mail", "osrs", "misc",};
@@ -24,7 +25,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const float mfact      = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster      = 1;    /* number of clients in master area */
-static const Bool resizehints = True; /* True means respect size hints in tiled resizals */
+static const Bool resizehints = False; /* True means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
