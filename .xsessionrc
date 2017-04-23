@@ -19,6 +19,9 @@ feh --bg-scale $BACKGROUND &
 # Initializes keybinds (volume, brightness, etc.)
 xbindkeys &
 
+# Runs composite manager
+xcompmgr &
+
 # Runs the bar manager that shows battery, time, date, ram, etc.
 BAR_MANAGER=$MY_HOME/schminix/dwm-bar-manager/dwm_bar_mgr
 sudo -u $MY_USER $BAR_MANAGER &

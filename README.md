@@ -12,6 +12,8 @@ to rebuild my computer from a fresh Linux installation.
 1. X11 Server
 1. feh (for background)
 1. xbindkeys
+1. transset
+1. xcompmgr
 
 #### Configuration:
 
