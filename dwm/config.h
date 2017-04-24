@@ -1,5 +1,4 @@
 /* appearance */
-static const char font[]            = "-*-terminus-medium-r-*-*-30-*-*-*-*-*-*-*";
 static const char normbordercolor[] = "#444444";
 static const char normbgcolor[]     = "#222222";
 static const char normfgcolor[]     = "#bbbbbb";
@@ -12,6 +11,12 @@ static const Bool showbar           = True;     /* False means no bar */
 static const Bool topbar            = True;     /* False means bottom bar */
 static const double borderwidth     = 0.04F;    /* size of borders as percent of screen size (without bar) */
 static const double borderheight    = 0.05F;    /* size of borders as percent of screen size (without bar) */
+static const Bool statusmarkup      = True;     /* True means use pango markup in status message */
+
+/* font stuff */
+static const char font[]      = "Hack 10";
+static const char termfont[]  = "Hack:size=10";
+static const char dmenufont[] = "Hack:size=10";
 
 /* tagging */
 static const char *tags[] = { "home", "web", "mail", "osrs", "misc",};
@@ -23,7 +28,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact      = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact      = 0.50; /* factor of master area size [0.05..0.95] */
 static const int nmaster      = 1;    /* number of clients in master area */
 static const Bool resizehints = False; /* True means respect size hints in tiled resizals */
 
@@ -46,8 +51,8 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *dmenucmd[]   = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]    = { "uxterm", "-fn", font, "-e", "bash", "-c", "cd ~; transset -a 0.75; clear; exec bash", NULL };
+static const char *dmenucmd[]   = { "dmenu_run", "-fa", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *termcmd[]    = { "uxterm", "-fa", termfont, "-e", "bash", "-c", "cd ~; transset -a 0.75; clear; exec bash", NULL };
 static const char *chromecmd[]  = { "chrome", NULL };
 static const char *osrscmd[]    = { "osbuddy", NULL };
 

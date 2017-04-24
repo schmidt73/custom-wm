@@ -23,5 +23,5 @@ xbindkeys &
 xcompmgr &
 
 # Runs the bar manager that shows battery, time, date, ram, etc.
-BAR_MANAGER=$MY_HOME/schminix/dwm-bar-manager/dwm_bar_mgr
+BAR_MANAGER=slstatus
 sudo -u $MY_USER $BAR_MANAGER &
