@@ -3,8 +3,8 @@ static const char font[]            = "-*-terminus-medium-r-*-*-30-*-*-*-*-*-*-*
 static const char normbordercolor[] = "#444444";
 static const char normbgcolor[]     = "#222222";
 static const char normfgcolor[]     = "#bbbbbb";
-static const char selbordercolor[]  = "#005577";
-static const char selbgcolor[]      = "#005577";
+static const char selbordercolor[]  = "#ffffff";
+static const char selbgcolor[]      = "#aa7009";
 static const char selfgcolor[]      = "#eeeeee";
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -47,7 +47,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *dmenucmd[]   = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]    = { "uxterm", "-fn", font, "-e", "bash", "-c", "cd ~; transset -a 0.8; clear; exec bash", NULL };
+static const char *termcmd[]    = { "uxterm", "-fn", font, "-e", "bash", "-c", "cd ~; transset -a 0.75; clear; exec bash", NULL };
 static const char *chromecmd[]  = { "chrome", NULL };
 static const char *osrscmd[]    = { "osbuddy", NULL };
 
