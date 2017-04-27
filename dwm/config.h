@@ -1,11 +1,11 @@
 /* appearance */
 static const char normbordercolor[] = "#444444";
-static const char normbgcolor[]     = "#222222";
-static const char normfgcolor[]     = "#bbbbbb";
+static const char normbgcolor[]     = "#111011";
+static const char normfgcolor[]     = "#dcdbde";
 static const char selbordercolor[]  = "#ffffff";
-static const char selbgcolor[]      = "#aa7009";
+static const char selbgcolor[]      = "#111011";
 static const char selfgcolor[]      = "#eeeeee";
-static const unsigned int borderpx  = 3;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const Bool showbar           = True;     /* False means no bar */
 static const Bool topbar            = True;     /* False means bottom bar */
@@ -14,16 +14,16 @@ static const double borderheight    = 0.05F;    /* size of borders as percent of
 static const Bool statusmarkup      = True;     /* True means use pango markup in status message */
 
 /* font stuff */
-static const char font[]      = "Hack 10";
-static const char termfont[]  = "Hack:size=10";
-static const char dmenufont[] = "Hack:size=10";
+static const char font[]      = "Hack 20";
+static const char termfont[]  = "Hack";
 
 /* tagging */
 static const char *tags[] = { "home", "web", "mail", "osrs", "misc",};
 
 static const Rule rules[] = {
-	/* class      			instance    title       tags mask     isfloating   monitor */
-	{ "Chromium-browser",  		NULL,       NULL,       1 << 1,       False,       -1 },
+	/* class      			        instance    title       tags mask     isfloating   monitor */
+	{ "Chromium-browser",  		    NULL,       NULL,       1 << 1,       False,       -1 },
+    { "Nylas Mail",                 NULL,       NULL,       1 << 2,       False,       -1 },
 	{ "com-osbuddy-loader-Loader",  NULL,       NULL,       1 << 3,       False,       -1 },
 };
 
@@ -51,16 +51,17 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *dmenucmd[]   = { "dmenu_run", "-fa", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]    = { "uxterm", "-fa", termfont, "-e", "bash", "-c", "cd ~; transset -a 0.75; clear; exec bash", NULL };
+static const char *dmenucmd[]   = { "dmenu_run", "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *termcmd[]    = { "uxterm", "-fa", termfont, "-fs", "20", "-e", "bash", "-c", "cd ~; transset -a 0.92; clear; exec bash", NULL };
 static const char *chromecmd[]  = { "chrome", NULL };
 static const char *osrscmd[]    = { "osbuddy", NULL };
+static const char *mailcmd[]    = { "nylas-mail", NULL};
 
 /* 
  * maps tags to their corresponding shell command for
  * use with the ALT+o keybind.
  */
-static const char** open_table[] = {termcmd, chromecmd, termcmd, osrscmd, termcmd};
+static const char** open_table[] = {termcmd, chromecmd, mailcmd, osrscmd, termcmd};
 static void app_open(const Arg *arg);
 
 static Key keys[] = {
