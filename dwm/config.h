@@ -22,7 +22,7 @@ static const char *tags[] = { "home", "web", "mail", "osrs", "misc",};
 
 static const Rule rules[] = {
 	/* class      			        instance    title       tags mask     isfloating   monitor */
-	{ "Chromium-browser",  		    NULL,       NULL,       1 << 1,       False,       -1 },
+	{ "Google-chrome",  		    NULL,       NULL,       1 << 1,       False,       -1 },
     { "Nylas Mail",                 NULL,       NULL,       1 << 2,       False,       -1 },
 	{ "com-osbuddy-loader-Loader",  NULL,       NULL,       1 << 3,       False,       -1 },
 };
