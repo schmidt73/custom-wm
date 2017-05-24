@@ -17,3 +17,10 @@ nnoremap <C-H> <C-W><C-H>
 
 set splitbelow
 set splitright
+
+" Sets color scheme to solarized
+set background=dark
+colorscheme solarized
+
+" Makes sure vim is transparent like shell.
+let g:seiya_auto_enable=1
